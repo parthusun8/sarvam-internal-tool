@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const PROD_URL = import.meta.env.VITE_BACKEND_URL;
 const betterAxios = axios.create({
     baseURL: PROD_URL,
-    withCredentials: true
+    // withCredentials: true
 });
 
 betterAxios.interceptors.request.use(

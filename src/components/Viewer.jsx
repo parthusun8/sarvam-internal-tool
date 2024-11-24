@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import LoadingAnimation from "../assets/loader.svg"
 import { betterAxios } from "../api/axios";
+import { SAMPLE_DATA } from './data';
+import ReactPaginate from 'react-paginate';
+import RowElement from './RowElement';
 
 const Viewer = ({ inputData }) => {
     const [loading, setLoading] = useState(true);
@@ -27,76 +30,92 @@ const Viewer = ({ inputData }) => {
         })
     }
 
+    const loadSampleData = () => {
+        const res = { data: SAMPLE_DATA }
+        setData(res.data?.data || []);
+        setColumns(res.data?.columns);
+        setTotalPages(res.data?.total_pages);
+        setTotalRows(res.data?.total_rows);
+        setTotalColums(res?.data?.columns.length);
+        setLoading(false);
+    }
+    const handlePageClick = (p) => {
+        const newPage = p.selected + 1;
+        console.log(newPage);
+        setCurrPage(newPage);
+    }
+
     useEffect(() => {
         if (inputData) {
+            setLoading(true);
             console.log("Here");
-            fetchTableData();
+            //fetchTableData(); // Call API data
+            loadSampleData(); // For dev dummy data
         }
-    }, [inputData]);
+    }, [inputData, currPage]);
 
     if (!inputData) return;
 
     return (
         <>
             {loading ? <div className='w-[50px] h-[50px]'><img src={LoadingAnimation} /></div> :
-                <div className='max-w-7xl w-full mx-auto'>
-                    <div class="w-full flex justify-between items-center mb-3 mt-1 pl-3">
+                <div className='max-w-[1500px] w-full mx-auto px-[6rem]'>
+                    <div className="w-full flex justify-between items-center mb-3 mt-1 pl-3">
                         <div>
-                            <h3 class="text-2xl">Dataset Overview</h3>
-                            <div class="gap-x-4 inline-flex justify-between">
+                            <h3 className="text-lg lg:text-2xl">Dataset Overview</h3>
+                            <div className="gap-x-4 inline-flex justify-between">
                                 {/* <span>Total Pages : {totalPages}</span> */}
                                 <span>Total Rows : {totalRows}</span>
                                 <span>Total Column : {totalColumns}</span></div>
                         </div>
                     </div>
 
-                    <div class="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
-                        <table class="w-full text-left table-auto min-w-max">
+                    <div className="relative flex flex-col w-full h-full overflow-scroll text-gray-700 bg-white shadow-md rounded-lg bg-clip-border">
+                        <table className="w-full text-left table-auto">
                             <thead>
                                 <tr>
                                     {columns?.map((col, ind) => {
-                                        return <th key={ind} class="p-4 border-b border-slate-200 bg-slate-50">
-                                            <p class="text-sm font-normal leading-none text-slate-500">
-                                                {col}
-                                            </p>
+                                        return <th key={ind} className="p-4 border-b border-slate-200 bg-slate-50 min-w-[100px] lg:min-w-[300px]">
+                                            <div className='flex flex-col gap-y-1'>
+                                                <p className="text-md font-semibold leading-none text-slate-800">
+                                                    {col.name}
+                                                </p>
+                                                <p className="text-sm italic font-normal leading-none text-slate-600">
+                                                    {col.type}
+                                                </p>
+                                            </div>
                                         </th>
                                     })}
                                 </tr>
                             </thead>
                             <tbody>
                                 {data?.map((row, ind) => {
-                                    return <tr key={ind} class="hover:bg-slate-50 border-b border-slate-200">
-                                        {Object.keys(row).map((val, ind) => {
-                                            return <td key={ind} class="p-4 py-5">
-                                                <p class="block font-semibold text-sm text-slate-800">{row[val]}</p>
-                                            </td>
-                                        })}
-                                    </tr>
+                                    return <RowElement key={ind} columns={columns} row={row} />
                                 })}
                             </tbody>
                         </table>
 
                     </div>
-                    <div class="flex justify-between items-center px-4 py-3">
-                        <div class="text-sm text-slate-500">
-                            Showing <b>1-5</b> of 45
+                    <div className="flex justify-between items-center px-4 py-3">
+                        <div className="text-sm text-slate-500">
+                            Showing <b>{data.length}</b> of {totalRows}
                         </div>
-                        <div class="flex space-x-1">
-                            <button class="px-3 py-1 min-w-9 min-h-9 text-sm font-normal text-slate-500 bg-white border border-slate-200 rounded hover:bg-slate-50 hover:border-slate-400 transition duration-200 ease">
-                                Prev
-                            </button>
-                            <button class="px-3 py-1 min-w-9 min-h-9 text-sm font-normal text-white bg-slate-800 border border-slate-800 rounded hover:bg-slate-600 hover:border-slate-600 transition duration-200 ease">
-                                1
-                            </button>
-                            <button class="px-3 py-1 min-w-9 min-h-9 text-sm font-normal text-slate-500 bg-white border border-slate-200 rounded hover:bg-slate-50 hover:border-slate-400 transition duration-200 ease">
-                                2
-                            </button>
-                            <button class="px-3 py-1 min-w-9 min-h-9 text-sm font-normal text-slate-500 bg-white border border-slate-200 rounded hover:bg-slate-50 hover:border-slate-400 transition duration-200 ease">
-                                3
-                            </button>
-                            <button class="px-3 py-1 min-w-9 min-h-9 text-sm font-normal text-slate-500 bg-white border border-slate-200 rounded hover:bg-slate-50 hover:border-slate-400 transition duration-200 ease">
-                                Next
-                            </button>
+                        <div className="flex space-x-1">
+                            <ReactPaginate
+                                breakLabel="..."
+                                nextLabel="Next >"
+                                onPageChange={handlePageClick}
+                                pageRangeDisplayed={4}
+                                pageCount={totalPages}
+                                previousLabel="< Previous"
+                                forcePage={currPage - 1}
+                                // renderOnZeroPageCount={null}
+                                className=' flex flex-row items-center justify-center space-x-2 overflow-hidden'
+                                pageClassName="border h-[40px] w-[40px] text-center items-center justify-center inline-flex rounded-md"
+                                nextClassName='pl-2'
+                                previousClassName='pr-2'
+                                activeClassName="bg-white text-black"
+                            />
                         </div>
                     </div>
                 </div>}

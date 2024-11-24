@@ -14,7 +14,7 @@ const InputForm = ({ handleSubmitForm }) => {
         formState: { errors, isValid },
     } = useForm({
         // TODO : REMOVE THE BELOW COMMENT
-        // resolver: yupResolver(gcsSchema),
+        resolver: yupResolver(gcsSchema),
         mode: "onChange",
         defaultValues: {
             "file_path": ""
