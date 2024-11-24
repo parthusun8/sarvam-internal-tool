@@ -4,131 +4,217 @@ const SAMPLE_DATA = {
     "current_page": 1,
     "page_size": 10,
     "columns": [
-        { "name": "text", "type": "string" },
-        { name: "translation", "type": "string" },
-        { name: "reference_text", "type": "string" },
-        { "name": "gs_audio_filepath", "type": "audio" },
-        { name: "lang", "type": "string" },
-        { name: "duration", "type": "string" },
-        { name: "language", "type": "string" },
-        { name: "type", "type": "string" },
-        { name: "audio_filepath", "type": "string" },
+        {
+            "name": "text",
+            "type": "object"
+        },
+        {
+            "name": "translation",
+            "type": "object"
+        },
+        {
+            "name": "reference_text",
+            "type": "object"
+        },
+        {
+            "name": "gs_audio_filepath",
+            "type": "object"
+        },
+        {
+            "name": "lang",
+            "type": "object"
+        },
+        {
+            "name": "duration",
+            "type": "float64"
+        },
+        {
+            "name": "language",
+            "type": "object"
+        },
+        {
+            "name": "type",
+            "type": "object"
+        },
+        {
+            "name": "audio_filepath",
+            "type": "object"
+        }
     ],
-    "filters": {
-        "lang": ["hi", "en", "eu"],
-        "type": ["A+ve", "B+ve"]
-    },
-    "quantitative_filters": {},
+    "filterable_columns": [
+        {
+            "name": "lang",
+            "filter_type": "categorical",
+            "unique_values": [
+                "Hindi"
+            ],
+            "min_value": null,
+            "max_value": null,
+            "allowed_operators": [
+                "eq",
+                "ne",
+                "in",
+                "not_in"
+            ]
+        },
+        {
+            "name": "duration",
+            "filter_type": "numeric",
+            "unique_values": null,
+            "min_value": 1.205,
+            "max_value": 15.95,
+            "allowed_operators": [
+                "eq",
+                "ne",
+                "gt",
+                "lt",
+                "ge",
+                "le"
+            ]
+        },
+        {
+            "name": "language",
+            "filter_type": "categorical",
+            "unique_values": [
+                "hindi",
+                "english"
+            ],
+            "min_value": null,
+            "max_value": null,
+            "allowed_operators": [
+                "eq",
+                "ne",
+                "in",
+                "not_in"
+            ]
+        },
+        {
+            "name": "type",
+            "filter_type": "categorical",
+            "unique_values": [
+                "noa"
+            ],
+            "min_value": null,
+            "max_value": null,
+            "allowed_operators": [
+                "eq",
+                "ne",
+                "contains",
+                "in",
+                "not_in"
+            ]
+        },
+    ],
     "data": [
         {
-            "text": "तीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गया",
-            "translation": "This happened three times. Then everything was pulled up into the sky.",
-            "reference_text": "’ तीन बार ऐसा ही हुआ; तब सब कुछ फिर आकाश पर खींच लिया गया",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_11_16khz_chunk_6.wav",
+            "text": "उन्होंने प्रदेश की जनता से विभिन्न माध्यमों से लिए गए सुझावों को लेकर दिल्ली में की बैठक में जानकारी दी। संकल्प पत्र समिति के अध्यक्ष रक्षा मंत्री राजनाथ सिंह",
+            "translation": "They gave information in a meeting in Delhi regarding the suggestions received from the people of the state through various means.  Raksha Mantri (Defense Minister) Rajnath Singh, the chairman of the Sankalp Patra (Resolution Paper) Committee.",
+            "reference_text": "उन्होंने प्रदेश की जनता से विभिन्न माध्यमों से लिए गए सुझावों को लेकर दिल्ली की बैठक में जानकारी दी",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_27.wav",
             "lang": "Hindi",
-            "duration": 5.625,
+            "duration": 9.07,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_11_16khz_chunk_6.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_27.wav"
         },
         {
-            "text": "इसलिए मैं जब बुलाया गया तो बिना कुछ कहे चला आयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गया",
-            "translation": "Therefore, when I was called, I came away without saying anything.",
-            "reference_text": "इसलिए मैं जब बुलाया गया तो बिना कुछ कहे चला आया",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_10_16khz_chunk_25.wav",
+            "text": "इस अवसर पर कलेक्टर डॉ सतेन्द्र सिंह सहित समस्त अधिकारियों द्वारा सामूहिक रूप से राष्ट्रगान और राष्ट्रगीत गाया गया।",
+            "translation": "On this occasion, the national anthem and national song were sung collectively by all the officers including Collector Dr. Satendra Singh.",
+            "reference_text": "इस अवसर पर कलेक्टर डॉ. सतेन्द्र सिंह सहित समस्त अधिकारियों द्वारा सामूहिक रूप से राष्ट्रगान एवं राष्ट्रीय गीत गाया",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Apr_2024_14-39_16khz_chunk_31.wav",
             "lang": "Hindi",
-            "duration": 5.25,
+            "duration": 5.76,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_10_16khz_chunk_25.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Apr_2024_14-39_16khz_chunk_31.wav"
         },
         {
-            "text": "तब उसने उन्हें भीतर बुलाकर उनको रहने की जगह दीतीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गया",
-            "translation": "Then he called them inside and gave them a place to stay.",
-            "reference_text": "” तब उसने उन्हें भीतर बुलाकर उनको रहने की जगह दी",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_10_16khz_chunk_19.wav",
+            "text": "उधर बुरहानपुर में मतगणना की तैयारियों और व्यवस्थाओं के संबंध में आज कलेक्टर और जिला निर्वाचन अधिकारी की अध्यक्षता में एक पत्रकार वार्ता आयोजित की गई।",
+            "translation": "Meanwhile, in Burhanpur, a press conference was organized today under the chairmanship of the Collector and the District Election Officer regarding the preparations and arrangements for the counting of votes.",
+            "reference_text": "उधर, बुरहानपुर में मतगणना की तैयारियों एवं व्यवस्थाओं के संबंध में आज कलेक्टर एवं जिला निर्वाचन अधिकारी की अध्यक्षता में पत्रकार वार्ता आयोजित की गई",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Jun_2024_14-10_16khz_chunk_17.wav",
             "lang": "Hindi",
-            "duration": 4.07,
+            "duration": 7.92,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_10_16khz_chunk_19.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Jun_2024_14-10_16khz_chunk_17.wav"
         },
         {
-            "text": "पतरस ये बातें कह ही रहा था कि पवित्र आत्मा वचन के सब सुनने वालों पर उतर आयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गया",
-            "translation": "Peter was still speaking when the Holy Spirit fell upon all who heard the message.",
-            "reference_text": "पतरस ये बातें कह ही रहा था कि पवित्र आत्मा वचन के सब सुननेवालों पर उतर आया",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_10_16khz_chunk_39.wav",
+            "text": "चैत्र कृष्ण पक्ष सप्तमी तिथि पर मनाया जाने वाला पर्व शीतला सप्तमी आज प्रदेश भर में परंपरागत रूप से मनाया गया। बड़ी संख्या में महिलाओं द्वारा शीतला माता का पूजन किया गया।",
+            "translation": "The festival celebrated on the seventh day of the Krishna Paksha in the month of Chaitra is Sheetla Saptami. Today, it was celebrated traditionally throughout the state. A large number of women performed the puja of Sheetla Mata.",
+            "reference_text": "चैत्र कृष्ण क्ष सप्तमी तिथि र मनाया जाने वाला र्व शीतला सप्तमी आज प्रदेश में रंरागत रू से मनाया गया",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_60.wav",
             "lang": "Hindi",
-            "duration": 5.985,
+            "duration": 11.09,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_10_16khz_chunk_39.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_60.wav"
         },
         {
-            "text": "बंदीगृह में पतरस की रखवाली हो रही थी। परन्तु कलीसिया उसके लिए लौ लगाकर परमेश्वर से प्रार्थना कर रही थी।",
-            "translation": "Peter was being guarded in prison. But the church was praying to God for him with earnest plea.तीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गया",
-            "reference_text": "बन्दीगृह में पतरस की रखवाली हो रही थी; परन्तु कलीसिया उसके लिये लौ लगाकर परमेश्वर से प्रार्थना कर रही थी",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_12_16khz_chunk_5.wav",
+            "text": "महादेव की होली कार्यक्रम के दौरान सिर में नारियल लगने से वह घायल हो गए। फिलहाल डॉक्टर उन्हें आराम करने की सलाह दे रहे हैं।",
+            "translation": "During a Mahadev Holi program, he was injured when a coconut hit his head. Currently, the doctor is advising him to rest.",
+            "reference_text": "आष्टा में आयोजित महादेव की होली कार्यक्रम के दौरान सिर में नारियल लगने से वह घायल हो गए",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_57.wav",
             "lang": "Hindi",
-            "duration": 8.355,
+            "duration": 6.33,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_12_16khz_chunk_5.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_57.wav"
         },
         {
-            "text": "मैंने कहा नहीं प्रभु नहीं क्योंकि कोई अपवित्र या अशुद्ध वस्तु मेरे मुंह में कभी नहीं गईतीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गया",
-            "translation": "I said, 'No, Lord, no; for nothing unclean or unholy has ever entered my mouth.",
-            "reference_text": "’ मैंने कहा, ‘नहीं प्रभु, नहीं; क्योंकि कोई अपवित्र या अशुद्ध वस्तु मेरे मुँह में कभी नहीं गई",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_11_16khz_chunk_4.wav",
+            "text": "सर्वोच्च न्यायालय ने धार जिले में विवादित भोजशाला और कमाल मौला मस्जिद परिसर के वैज्ञानिक सर्वेक्षण पर रोक लगाने से इंकार कर दिया है।",
+            "translation": "The Supreme Court has refused to put a stop to the scientific survey of the disputed Bhojshala and Kamal Maula Masjid complex in Dhar district.",
+            "reference_text": "सर्वोच्च न्यायालय ने धार जिले में विवादित भोजशाला और कमाल मौला मस्जिद रिसर के वैज्ञानिक सर्वेक्षण र रोक लगाने से इंकार कर दिया है",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_15.wav",
             "lang": "Hindi",
-            "duration": 8.135,
+            "duration": 8.445,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_11_16khz_chunk_4.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_15.wav"
         },
         {
-            "text": "इसके उत्तर में आकाश से दोबारा आवाज आई जो कुछ परमेश्वर ने शुद्ध ठहरातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयाया है उसे अशुद्ध मत कहें",
-            "translation": "In response to this, a voice came again from heaven, 'Do not call anythतीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयाing that God has made clean, unclean.'",
-            "reference_text": "’ इसके उत्तर में आकाश से दोबारा आवाज आई, ‘जो कुछ परमेश्वर ने शुद्ध ठहराया है, उसे अशुद्ध मत कतीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयातीन बार ऐसा ही हुआ तब सब कुछ फिर आकाश पर खींच लिया गयाह",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_11_16khz_chunk_5.wav",
+            "text": "वित्त वर्ष 2022-23 में जीडीपी विकास दर 7 प्रतिशत रही थी।",
+            "translation": "In the fiscal year 2022-23, the GDP growth rate was 7 percent.",
+            "reference_text": "वित्त वर्ष 2022-23 में जी डी पी विकास दर 7 प्रतिशत रही थी",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Jun_2024_14-10_16khz_chunk_28.wav",
             "lang": "Hindi",
-            "duration": 9.265,
+            "duration": 3.64,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_11_16khz_chunk_5.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Jun_2024_14-10_16khz_chunk_28.wav"
         },
         {
-            "text": "अब हम सब यहाँ परमेश्वर के सामने हैं ताकि जो कुछ परमेश्वर ने तुझ से कहा है उसे सुनें",
-            "translation": "Now we are all here before God so that we may hear what God has said to you.",
-            "reference_text": "अब हम सब यहाँ परमेश्वर के सामने हैं, ताकि जो कुछ परमेश्वर ने तुझ से कहा है उसे सुनें",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_10_16khz_chunk_31.wav",
+            "text": "इंदौर जिले में युवाओं को मतदान के प्रति जागरूक करने के लिए विशेष प्रयास किए जा रहे हैं। इसी क्रम में इंदौर जिले के सभी महाविद्यालयों में मतदाता साक्षरता क्लब का गठन किया जा रहा है।",
+            "translation": "Special efforts are being made to make young people in Indore district aware of voting. In this series, voter literacy clubs are being formed in all colleges of Indore district.",
+            "reference_text": "इंदौर जिले में य्वाओं को मतदान के प्रति जागरूक करने के लिए विशेष प्रयास किये जा रहे है",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_43.wav",
             "lang": "Hindi",
-            "duration": 7.06,
+            "duration": 9.88,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_10_16khz_chunk_31.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_43.wav"
         },
         {
-            "text": "क्योंकि उन्होंने उन्हें भाँति-भाँति की भाषा बोलते और परमेश्वर की बड़ाई करते सुना",
-            "translation": "Because they heard them speaking in different languages and praising God.",
-            "reference_text": "क्योंकि उन्होंने उन्हें भाँति-भाँति की भाषा बोलते और परमेश्वर की बड़ाई करते सुना",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_10_16khz_chunk_41.wav",
+            "text": "नीमच में कलेक्टर ने डूंगलावदा में स्थापित गेहूं और चना उपार्जन केंद्र का निरीक्षण कर व्यवस्थाओं का जायजा लिया",
+            "translation": "The collector in Neemuch inspected the wheat and gram procurement center established in Dunglavada and reviewed the arrangements.",
+            "reference_text": "नीमच में कलेक्टर ने ड्रंगलावदा में स्थाप्रित गेहं और चना उपार्जन केंद्र का निरीक्षण कर व्यवस्थाओं का जायजा लिया",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_54.wav",
             "lang": "Hindi",
-            "duration": 7.12,
+            "duration": 6.345,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_10_16khz_chunk_41.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_01_Apr_2024_19-34_16khz_chunk_54.wav"
         },
         {
-            "text": "और उसे एक ऐसी वाणी सुनाई दी, हे पतरस उठ, मार और खा",
-            "translation": "And a voice came to him, 'Peter, get up, kill and eat.'",
-            "reference_text": "और उसे एक ऐसी वाणी सुनाई दी, “हे पतरस उठ, मार और खा",
-            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/Bible/hi/Acts_10_16khz_chunk_11.wav",
+            "text": "ऑडिटोरियम हाल छतरपुर में पुलिस मुख्यालय के उड़ान अभियान के तहत पुलिस अधीक्षक छतरपुर की अध्यक्षता में महिला पुलिस अधिकारियों का प्रशिक्षण हुआ जिसमें महिला पीड़िता के साथ संवेदनशीलता और सकारात्मक व्यवहार करने और उनकी समस्याओं के शीघ्र निराकरण हेतु दिशा निर्देश दिए गए।",
+            "translation": "In the auditorium hall of Chhatarpur, under the 'Udaan Abhiyan' of the police headquarters, training was conducted for women police officers under the chairmanship of the Superintendent of Police, Chhatarpur.  Guidelines were given on how to behave sensitively and positively with women victims and to quickly resolve their problems.",
+            "reference_text": "ऑडिटोरियम हाल छतरपुर में पुलिस मुख्यालय के ‘उड़ान अभियान’ के तहत पुलिस अधीक्षक छतरपुर की अध्यक्षता में महिला पुलिस अधिकारियों के प्रशिक्षण में महिला पीड़िता के साथ संवेदनशीलता एवं संकरात्मक व्यवहार कर उनकी सेमस्याओं के शीघ्र निराकरण हेतु दिशा निर्देश दिए गए",
+            "gs_audio_filepath": "gs://audiotextdata/asr_train_dataset_0_3/NoA/hi/audio/Bhopal_Hindi_02_May_2024_14-46_16khz_chunk_30.wav",
             "lang": "Hindi",
-            "duration": 6.32,
+            "duration": 7.5,
             "language": "hindi",
-            "type": "bible",
-            "audio_filepath": "/shared/home/model/bible_noa_audios/bible/Acts_10_16khz_chunk_11.wav"
+            "type": "noa",
+            "audio_filepath": "/shared/home/model/bible_noa_audios/noa/Bhopal_Hindi_02_May_2024_14-46_16khz_chunk_30.wav"
         }
     ],
     "message": "Dataset loaded successfully"

@@ -24,7 +24,7 @@ const AudioPlayer = ({ path }) => {
     }, []);
     return (
         <div className='w-full inline-flex items-center justify-center'>
-            {audioSrc ? <audio controls src={audioSrc} className=' h-10'>
+            {audioSrc ? <audio controls src={audioSrc} className='h-10'>
                 Your browser does not support the audio element.
             </audio> : <div className='w-[30px] h-[30px]'><img src={LoadingAnimation} /></div>}
         </div>

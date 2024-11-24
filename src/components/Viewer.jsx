@@ -4,6 +4,7 @@ import { betterAxios } from "../api/axios";
 import { SAMPLE_DATA } from './data';
 import ReactPaginate from 'react-paginate';
 import RowElement from './RowElement';
+import HeaderWithFilter from './HeaderWithFilter';
 
 const Viewer = ({ inputData }) => {
     const [loading, setLoading] = useState(true);
@@ -14,22 +15,47 @@ const Viewer = ({ inputData }) => {
     const [pageSize, setPageSize] = useState(10);
     const [columns, setColumns] = useState(null);
     const [data, setData] = useState([]);
+    const [filterable_columns, setFilterableCols] = useState({});
+    const [showFilterUI, setShowFilterUI] = useState([]);
+    const [appliedFilters, setAppliedFilters] = useState([]);
 
-    const fetchTableData = async () => {
+    const handleShowFilterUI = (ind) => {
+
+        console.log(ind)
+        setShowFilterUI(showFilterUI.map((v, ind2) => ind == ind2 ? v == 1 ? 0 : 1 : 0));
+    }
+
+    const fetchTableData = async (filters = []) => {
         await betterAxios.post("api/v1/dataset/load", {
             "file_path": inputData.file_path,
             "page": currPage,
-            "page_size": pageSize
+            "page_size": pageSize,
+            filters
         }).then((res) => {
             setData(res.data?.data || []);
             setColumns(res.data?.columns);
             setTotalPages(res.data?.total_pages);
             setTotalRows(res.data?.total_rows);
             setTotalColums(res?.data?.columns.length);
+            generateFilters(res?.data?.filterable_columns);
+            setShowFilterUI(res?.data?.columns?.map((_, i) => 0));
             setLoading(false);
         })
     }
-
+    const generateFilters = (filterData) => {
+        if (!filterData) return;
+        let fil = {};
+        for (var i = 0; i < filterData.length; i++) {
+            const d = filterData[i];
+            fil[d.name] = {
+                type: d.filter_type,
+                max: d.max_value,
+                min: d.min_value,
+                options: d.unique_values
+            }
+        }
+        setFilterableCols(fil);
+    }
     const loadSampleData = () => {
         const res = { data: SAMPLE_DATA }
         setData(res.data?.data || []);
@@ -37,6 +63,8 @@ const Viewer = ({ inputData }) => {
         setTotalPages(res.data?.total_pages);
         setTotalRows(res.data?.total_rows);
         setTotalColums(res?.data?.columns.length);
+        generateFilters(res?.data?.filterable_columns);
+        setShowFilterUI(res?.data?.columns?.map((_, i) => 0));
         setLoading(false);
     }
     const handlePageClick = (p) => {
@@ -49,10 +77,16 @@ const Viewer = ({ inputData }) => {
         if (inputData) {
             setLoading(true);
             console.log("Here");
-            //fetchTableData(); // Call API data
-            loadSampleData(); // For dev dummy data
+            fetchTableData(); // Call API data
+            // loadSampleData(); // For dev dummy data
         }
     }, [inputData, currPage]);
+
+    const handleFilterApply = (data) => {
+        setAppliedFilters([...appliedFilters, data]);
+        console.log([...appliedFilters, data]);
+        fetchTableData([...appliedFilters, data])
+    }
 
     if (!inputData) return;
 
@@ -75,16 +109,7 @@ const Viewer = ({ inputData }) => {
                             <thead>
                                 <tr>
                                     {columns?.map((col, ind) => {
-                                        return <th key={ind} className="p-4 border-b border-slate-200 bg-slate-50 min-w-[100px] lg:min-w-[300px]">
-                                            <div className='flex flex-col gap-y-1'>
-                                                <p className="text-md font-semibold leading-none text-slate-800">
-                                                    {col.name}
-                                                </p>
-                                                <p className="text-sm italic font-normal leading-none text-slate-600">
-                                                    {col.type}
-                                                </p>
-                                            </div>
-                                        </th>
+                                        return <HeaderWithFilter handleFilterApply={handleFilterApply} handleShowFilterUI={handleShowFilterUI} showFilterUI={showFilterUI[ind]} ind={ind} filters={filterable_columns[col.name]} col={col} key={ind} />
                                     })}
                                 </tr>
                             </thead>
