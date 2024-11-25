@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const allOptions = {
     categorical: ['eq', 'ne'],
-    numeric: ['eq', 'ne', 'gt', 'lt', 'gte', 'lte'],
+    numeric: ['eq', 'ne', 'gt', 'lt'],
 };
 
 const FilterUI = ({ col, filters, handleFilterApply, handleShowFilterUI, ind }) => {

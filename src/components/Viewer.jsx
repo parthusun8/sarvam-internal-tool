@@ -7,6 +7,9 @@ import RowElement from './RowElement';
 import HeaderWithFilter from './HeaderWithFilter';
 
 const Viewer = ({ inputData }) => {
+
+    console.log(inputData);
+
     const [loading, setLoading] = useState(true);
     const [totalPages, setTotalPages] = useState(0);
     const [totalRows, setTotalRows] = useState(0);
@@ -74,6 +77,7 @@ const Viewer = ({ inputData }) => {
     }
 
     useEffect(() => {
+        console.log(inputData)
         if (inputData) {
             setLoading(true);
             console.log("Here");
@@ -83,9 +87,20 @@ const Viewer = ({ inputData }) => {
     }, [inputData, currPage]);
 
     const handleFilterApply = (data) => {
-        setAppliedFilters([...appliedFilters, data]);
-        console.log([...appliedFilters, data]);
-        fetchTableData([...appliedFilters, data])
+
+        let finalFilters = [...appliedFilters];
+
+        const ind = appliedFilters.findIndex((fil, ind) => fil.column == data.column);
+        console.log(ind);
+
+        if (ind != -1) {
+            finalFilters[ind] = data;
+        } else {
+            finalFilters = [...finalFilters, data];
+        }
+
+        setAppliedFilters(finalFilters);
+        fetchTableData(finalFilters);
     }
 
     if (!inputData) return;

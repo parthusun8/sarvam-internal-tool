@@ -13,7 +13,6 @@ const InputForm = ({ handleSubmitForm }) => {
         handleSubmit,
         formState: { errors, isValid },
     } = useForm({
-        // TODO : REMOVE THE BELOW COMMENT
         resolver: yupResolver(gcsSchema),
         mode: "onChange",
         defaultValues: {
